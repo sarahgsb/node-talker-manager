@@ -21,6 +21,10 @@ app.use('/talker', talkersRouter);
 // Requisito 2 - Crie o endpoint GET /talker/:id
 app.use('/talker/:id', talkersRouter);
 
+// Requisito 3 - Crie o endpoint POST /login
+
+app.use('/login', talkersRouter);
+
 app.listen(PORT, () => {
   console.log('Online');
 });

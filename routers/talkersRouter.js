@@ -1,7 +1,10 @@
 const router = require('express').Router();
 const fs = require('fs');
+const crypto = require('crypto');
 
 const talkers = './talker.json';
+
+const login = require('../middlewares/login');
 
 const HTTP_OK_STATUS = 200;
 const NOT_FOUND = 404;
@@ -26,5 +29,12 @@ router.get('/:id', (request, response) => {
     
     return response.status(HTTP_OK_STATUS).json(talker);
     });
+
+// Requisito 3 - Crie o endpoint POST /login
+// Referencia de como usar o modulo crypto em https://www.geeksforgeeks.org/node-js-crypto-randombytes-method/
+router.post('/', login, (_request, response) => {
+    const token = crypto.randomBytes(8).toString('hex');
+    return response.status(HTTP_OK_STATUS).json({ token });
+});    
 
 module.exports = router;
