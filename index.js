@@ -15,7 +15,11 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+// Requisito 1 - Crie o endpoint GET /talker
 app.use('/talker', talkersRouter);
+
+// Requisito 2 - Crie o endpoint GET /talker/:id
+app.use('/talker/:id', talkersRouter);
 
 app.listen(PORT, () => {
   console.log('Online');
