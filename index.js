@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const crypto = require('crypto');
 const login = require('./middlewares/login');
-// const tokenValidation = require('./middlewares/token');
+// const tokenValidation = require('./middlewares/tokenValidation');
 const {
   isValidToken,
   isValidName,
@@ -59,12 +59,13 @@ app.post('/login', login, (_request, response) => {
 
 // Requisito 4 - Crie o endpoint POST /talker
 app.post('/talker',
+// tokenValidation,
 isValidToken,
 isValidName,
 isValidAge,
-isValidRate,
-isValidWatched,
 isValidTalk,
+isValidWatched,
+isValidRate,
 (request, response) => {
   const { name, age, talk: { watchedAt, rate } } = request.body;
 
@@ -78,7 +79,7 @@ isValidTalk,
   };
 
   talkersList.push(createTalker);
-  fs.writeFile(talkers, JSON.stringify(talkersList));
+  fs.writeFileSync(talkers, JSON.stringify(talkersList));
 
   return response.status(201).json(createTalker);
 });

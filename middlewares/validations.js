@@ -1,9 +1,9 @@
 const isValidToken = (request, response, next) => {
-  const { authorization } = request.headers;
-    if (!authorization) {
+  const token = request.headers.authorization;
+    if (!token) {
       return response.status(401).json({ message: 'Token não encontrado' });
     }
-    if (authorization !== '7mqaVRXJSp886CGr') {
+    if (token.length !== 16) {
       return response.status(401).json({ message: 'Token inválido' });
     }
 
