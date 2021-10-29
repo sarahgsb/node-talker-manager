@@ -84,6 +84,17 @@ isValidRate,
   return response.status(201).json(createTalker);
 });
 
+// requisito 6
+app.delete('/talker/:id', isValidToken, (request, response) => {
+ const { id } = request.params;
+
+const talkersList = JSON.parse(fs.readFileSync(talkers, 'utf-8'));
+const filteredTalkers = talkersList.filter((talker) => talker.id !== parseInt(id, 10));
+
+fs.writeFileSync(talkers, JSON.stringify(filteredTalkers));
+return response.status(HTTP_OK_STATUS).json({ message: 'Pessoa palestrante deletada com sucesso' });
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 });
