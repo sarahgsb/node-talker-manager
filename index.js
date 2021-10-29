@@ -84,7 +84,27 @@ isValidRate,
   return response.status(201).json(createTalker);
 });
 
-// requisito 6
+// Requisito 5 - Crie o endpoint PUT /talker/:id
+app.put('/talker/:id', 
+  isValidToken,
+  isValidName,
+  isValidAge,
+  isValidTalk,
+  isValidWatched,
+  isValidRate, (request, response) => {
+  const { id } = request.params;
+  const { name, age, talk } = request.body;
+
+  const talkersList = JSON.parse(fs.readFileSync(talkers, 'utf8'));
+  const talkerFiltered = talkersList.filter((talker) => talker.id !== parseInt(id, 10));
+  const editTalker = { id: parseInt(id, 10), name, age, talk };
+
+  talkerFiltered.push(editTalker);
+  fs.writeFileSync(talkers, JSON.stringify(talkerFiltered));
+  return response.status(200).json(editTalker);
+});
+
+// Requisito 6 - Crie o endpoint DELETE /talker/:id
 app.delete('/talker/:id', isValidToken, (request, response) => {
  const { id } = request.params;
 
